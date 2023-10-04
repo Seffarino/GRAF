@@ -1,7 +1,8 @@
 package m1graf2023;
 
 import java.util.*;
-
+import java.io.*;
+import java.util.regex.*;
 /**
  * Represents a directed graph using an adjacency edge list.
  */
@@ -15,6 +16,30 @@ public class Graf implements graf_interface{
         adjEdList = new HashMap<>();
     }
 
+    /**
+     * Constructs an empty graph.
+     */
+    public Graf(int... values) {
+        adjEdList = new HashMap<>();
+
+        int nodeId = 1; // Start with node ID 1
+
+        for (int val : values) {
+            Node from = new Node(nodeId);
+            Node to = val == 0 ? null : new Node(val);
+
+            if (!adjEdList.containsKey(from)) {
+                addNode(from);
+            }
+
+            if (to != null) {
+                Edge edge = new Edge(from, to);
+                addEdge(edge);
+            }
+
+            nodeId++;
+        }
+    }
     /**
      * Returns the number of nodes in the graph.
      *
@@ -496,4 +521,65 @@ public class Graf implements graf_interface{
         }
         return 0;
     }
+        // ... (previous methods)
+
+        // Static method to import a graph from a DOT file with default extension ".gv"
+        public static Graf fromDotFile(String filename) {
+            return fromDotFile(filename, ".gv");
+        }
+
+        // Static method to import a graph from a DOT file with a specified extension
+        public static Graf fromDotFile(String filename, String extension) {
+            Graf graf = new Graf();
+
+            try (BufferedReader reader = new BufferedReader(new FileReader(filename + extension))) {
+                String line;
+                Pattern edgePattern = Pattern.compile("(\\d+)\\s*->\\s*(\\d+);");
+
+                while ((line = reader.readLine()) != null) {
+                    Matcher matcher = edgePattern.matcher(line);
+                    if (matcher.find()) {
+                        int fromId = Integer.parseInt(matcher.group(1));
+                        int toId = Integer.parseInt(matcher.group(2));
+                        Node from = new Node(fromId);
+                        Node to = new Node(toId);
+                        graf.addNode(from);
+                        graf.addNode(to);
+                        graf.addEdge(new Edge(from, to));
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return graf;
+        }
+
+        // Method to export the graph as a String in DOT syntax
+        public String toDotString() {
+            StringBuilder dotString = new StringBuilder("digraph G {\n");
+
+            for (Edge edge : getAllEdges()) {
+                dotString.append("  ").append(edge.getFrom().getId()).append(" -> ").append(edge.getTo().getId()).append(";\n");
+            }
+
+            dotString.append("}\n");
+
+            return dotString.toString();
+        }
+
+        // Method to export the graph as a DOT file with default extension ".gv"
+        public void toDotFile(String fileName) {
+            toDotFile(fileName, ".gv");
+        }
+
+        // Method to export the graph as a DOT file with a specified extension
+        public void toDotFile(String fileName, String extension) {
+            try (PrintWriter writer = new PrintWriter(fileName + extension)) {
+                writer.println(toDotString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
 }

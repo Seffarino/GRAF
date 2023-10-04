@@ -21,6 +21,17 @@ public class Edge implements Comparable<Edge>, edge_interface{
         this.to = to;
         this.weight = 0;
     }
+    /**
+     * Constructs an unweighted edge between two nodes.
+     *
+     * @param fromId The source node ID of the edge.
+     * @param toId   The target node ID of the edge.
+     */
+    public Edge(int fromId, int toId) {
+        this.from = new Node(fromId);
+        this.to = new Node(toId);
+        this.weight = 0; // Default weight is 0 (not weighted)
+    }
 
     /**
      * Constructs a weighted edge between two nodes.
