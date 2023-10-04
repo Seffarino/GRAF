@@ -1,16 +1,7 @@
-import static org.junit.jupiter.api.Assertions.*;
-
-import m1graf2023.Edge;
-import m1graf2023.Graf;
-import m1graf2023.Node;
-import org.junit.jupiter.api.Assertions;
+import m1graf2023.*;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import m1graf2023.Graf;
-import m1graf2023.Node;
-import m1graf2023.Edge;
 
-
+import static org.junit.jupiter.api.Assertions.*;
 class GrafTest {
     private Graf graf;
 
@@ -19,20 +10,19 @@ class GrafTest {
         graf = new Graf();
     }
 
-    @Test
+
     void testAddNode() {
         Node node = new Node(1);
         assertTrue(graf.addNode(node));
         assertEquals(1, graf.nbNodes());
     }
 
-    @Test
     void testAddNodeWithId() {
         assertTrue(graf.addNode(2));
         assertEquals(1, graf.nbNodes());
     }
 
-    @Test
+
     void testRemoveNode() {
         Node node = new Node(1);
         graf.addNode(node);
@@ -40,26 +30,26 @@ class GrafTest {
         assertEquals(0, graf.nbNodes());
     }
 
-    @Test
+
     void testRemoveNodeWithId() {
         graf.addNode(1);
         assertTrue(graf.removeNode(1));
         assertEquals(0, graf.nbNodes());
     }
 
-    @Test
+
     void testExistsNode() {
         Node node = new Node(1);
         graf.addNode(node);
         assertTrue(graf.existsNode(node));
     }
 
-    @Test
+
     void testExistsNodeWithId() {
         graf.addNode(1);
         assertTrue(graf.existsNode(1));
     }
-    @Test
+
     void testAddEdge() {
         Node node1 = new Node(1);
         Node node2 = new Node(2);
@@ -73,7 +63,7 @@ class GrafTest {
         assertEquals(edge, graf.getOutEdges(node1).get(0));
     }
 
-    @Test
+
     void testAddAndRemoveEdges() {
         Node node1 = new Node(1);
         Node node2 = new Node(2);
@@ -97,7 +87,7 @@ class GrafTest {
         assertFalse(graf.existsEdge(node1, node3));
     }
 
-    @Test
+
     void testGetOutEdges() {
         // Create nodes and add edges
         Node node1 = new Node(1);
@@ -112,7 +102,7 @@ class GrafTest {
         assertEquals(0, graf.getOutEdges(node3).size());
     }
 
-    @Test
+
     void testGetInEdges() {
         // Create nodes and add edges
         Node node1 = new Node(1);
@@ -129,7 +119,7 @@ class GrafTest {
 
     // Add more test methods for other operations...
 
-    @Test
+
     void testNbEdges() {
         // Create nodes and add edges
         Node node1 = new Node(1);
@@ -141,7 +131,7 @@ class GrafTest {
         assertEquals(2, graf.nbEdges());
     }
 
-    @Test
+
     void testGetAllEdges() {
         // Create nodes and add edges
         Node node1 = new Node(1);
@@ -153,7 +143,7 @@ class GrafTest {
         assertEquals(2, graf.getAllEdges().size());
     }
 
-    @Test
+
     void testInDegree() {
         Node node1 = new Node(1);
         Node node2 = new Node(2);
@@ -169,7 +159,7 @@ class GrafTest {
         assertEquals(2, graf.inDegree(node3));
     }
 
-    @Test
+
     void testOutDegree() {
         Node node1 = new Node(1);
         Node node2 = new Node(2);
@@ -185,7 +175,7 @@ class GrafTest {
         assertEquals(0, graf.outDegree(node3));
     }
 
-    @Test
+
     void testDegree() {
         Node node1 = new Node(1);
         Node node2 = new Node(2);
