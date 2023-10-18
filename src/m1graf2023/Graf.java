@@ -17,27 +17,21 @@ public class Graf implements graf_interface{
     }
 
     /**
-     * Constructs an empty graph.
+     * Constructs a graph from the successor array.
      */
     public Graf(int... values) {
         adjEdList = new HashMap<>();
-
-        int nodeId = 1; // Start with node ID 1
-
-        for (int val : values) {
-            Node from = new Node(nodeId);
-            Node to = val == 0 ? null : new Node(val);
-
-            if (!adjEdList.containsKey(from)) {
-                addNode(from);
+        int currentNode = 1;
+        for(int val : values){
+            addNode(currentNode);
+            if(val == 0){
+                currentNode++;
             }
-
-            if (to != null) {
-                Edge edge = new Edge(from, to);
-                addEdge(edge);
+            else
+            {
+                addNode(val);
+                addEdge(currentNode,val);
             }
-
-            nodeId++;
         }
     }
     /**
@@ -213,8 +207,12 @@ public class Graf implements graf_interface{
         Node fromNode = edge.getFrom();
         Node toNode = edge.getTo();
 
-        if (!adjEdList.containsKey(fromNode) || !adjEdList.containsKey(toNode)) {
-            throw new IllegalArgumentException("Nodes in the edge must exist in the graph.");
+        if (!adjEdList.containsKey(fromNode)) {
+            addNode(fromNode);
+        }
+
+        if (!adjEdList.containsKey(toNode)) {
+            addNode(toNode);
         }
 
         adjEdList.get(fromNode).add(edge);

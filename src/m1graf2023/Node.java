@@ -66,6 +66,11 @@ public class Node implements Comparable<Node> {
     }
 
     @Override
+    public String toString() {
+        return String.valueOf(id);
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(id);
     }
