@@ -98,7 +98,7 @@ public class Edge implements Comparable<Edge>, edge_interface{
     }
 
     public String toString() {
-        return from.toString() + " -> " + to.toString() + " (Weight: " + weight + ")";
+        return from.toString() + "->" + to.toString() ;
     }
 
     @Override
